@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'src'",
+            "name": "Debug executable 'aws-s3-storage'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=src",
-                    "--package=src"
+                    "--bin=aws-s3-storage",
+                    "--package=aws-s3-storage"
                 ],
                 "filter": {
-                    "name": "src",
+                    "name": "aws-s3-storage",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'src'",
+            "name": "Debug unit tests in executable 'aws-s3-storage'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=src",
-                    "--package=src"
+                    "--bin=aws-s3-storage",
+                    "--package=aws-s3-storage"
                 ],
                 "filter": {
-                    "name": "src",
+                    "name": "aws-s3-storage",
                     "kind": "bin"
                 }
             },
