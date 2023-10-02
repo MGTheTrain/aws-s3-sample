@@ -13,10 +13,26 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - custom-network  # Define the custom network for Localstack
+
+networks:
+  custom-network:  # Define a custom network
 
 # [A fully functional local AWS cloud stack. Develop and test your cloud & Serverless apps offline](https://hub.docker.com/r/localstack/localstack)
 # Ref: https://docs.localstack.cloud/getting-started/installation/#docker-compose
 
-# Check service
-# 
-# /opt/code/localstack/bin/localstack status services
+# Check localstack services
+# - [Start interactive container process] 
+#   sudo docker exec -it <> bash
+#     /opt/code/localstack/bin/localstack status services (Check localstack services, e.g. S3, Ec2, etc.)
+
+# Localstack port ranges
+# AWS S3: Port 4572 (HTTP) and Port 4573 (HTTPS) - Used to emulate Amazon S3.
+# AWS Lambda: Port 4574 - Used for AWS Lambda functions.
+# AWS DynamoDB: Port 4569 (HTTP) and Port 4570 (HTTPS) - Used to emulate Amazon DynamoDB.
+# AWS SQS (Simple Queue Service): Port 4575 (HTTP) and Port 4576 (HTTPS) - Used for Amazon SQS.
+# AWS SNS (Simple Notification Service): Port 4577 (HTTP) and Port 4578 (HTTPS) - Used for Amazon SNS.
+# AWS Secrets Manager: Port 4582 (HTTP) and Port 4583 (HTTPS) - Used for AWS Secrets Manager.
+# AWS Step Functions: Port 4584 (HTTP) and Port 4585 (HTTPS) - Used for AWS Step Functions.
+# AWS CloudFormation: Port 4581 (HTTP) and Port 4580 (HTTPS) - Used for AWS CloudFormation
