@@ -9,7 +9,7 @@ aws configure set default.endpoint_url http://localstack:4566
 export AWS_PAGER=""
 # Single download
 aws s3 cp s3://mybucket/sample.txt sample-download.txt
-# Multiple download
+# Multiple downloads
 # aws s3 cp s3://bucket-name/*.txt txt-folder/
-# Multiple recursive download
+# Multiple recursive downloads
 # aws s3 cp s3://bucket-name/folder-name local-destination-folder/ --recursive
