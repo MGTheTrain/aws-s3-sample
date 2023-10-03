@@ -58,6 +58,8 @@ async fn main() -> Result<(), Error> {
 
     remove_object(&client, &bucket_name, &key).await?;
 
+    delete_bucket(&client, &bucket_name).await?;
+
     Ok(())
 }
 
@@ -162,5 +164,11 @@ async fn remove_object(client: &Client, bucket: &str, key: &str) -> Result<(), E
 
     println!("Object deleted.");
 
+    Ok(())
+}
+
+async fn delete_bucket(client: &Client, bucket_name: &str) -> Result<(), Error> {
+    client.delete_bucket().bucket(bucket_name).send().await?;
+    println!("Bucket deleted");
     Ok(())
 }
