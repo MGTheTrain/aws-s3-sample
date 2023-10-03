@@ -1,6 +1,6 @@
 # azure-blob-storage-sample
 
-Repository demonstrating how to interface (up- and download blobs) with public AWS S3 buckets with Rust and required third-party crates.
+Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust and required third-party crates.
 
 ## References
 
