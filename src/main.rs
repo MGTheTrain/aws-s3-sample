@@ -41,7 +41,7 @@ async fn main() -> Result<(), Error> {
 
     show_buckets(&client).await?;
 
-    // create_bucket(&client, &bucket_name, &region).await?;
+    create_bucket(&client, &bucket_name, &region).await?;
     println!("Created bucket with name {}", bucket_name);
     
     upload_object(&client, &bucket_name, &file_name, &key).await?;
