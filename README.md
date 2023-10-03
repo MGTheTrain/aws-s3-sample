@@ -1,4 +1,4 @@
-# azure-blob-storage-sample
+# aws-s3-sample
 
 ## Table of Contents
 
