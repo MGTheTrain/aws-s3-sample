@@ -1,5 +1,13 @@
 # azure-blob-storage-sample
 
+## Table of Contents
+
++ [Summary](#summary)
++ [References](#references)
++ [How to use](#how-to-use)
+
+## Summary
+
 Repository demonstrating how to interface (up- and download blobs) with public AWS S3 buckets with Rust and required third-party crates.
 
 ## References
@@ -23,7 +31,7 @@ sudo docker compose up -d --build
 
 **2. Run Rust sample**
 
-The Rust sample can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.). You need to utilize a public s3 service bucket.
+The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.). You need to utilize a public s3 service bucket.
 
 Therefore create from the [secrets.cfg.template](./secrets.cfg.template) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
 Afterwards execute the following:
