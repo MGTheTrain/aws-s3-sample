@@ -8,7 +8,8 @@ async fn main() -> Result<(), Error> {
     let env_vars_to_check = [ "AWS_ACCESS_KEY_ID",
                                          "AWS_SECRET_ACCESS_KEY",
                                          "AWS_DEFAULT_REGION",
-                                         "AWS_ENDPOINT_URL" ];
+                                         "AWS_ENDPOINT_URL",
+                                         "AWS_BUCKET_NAME" ];
 
     // Call the function to check if the environment variables are set
     if are_env_vars_set(&env_vars_to_check) {
@@ -33,7 +34,8 @@ async fn main() -> Result<(), Error> {
             println!("{} is not set.", region);
         }
     }
-    let bucket_name = "mg-test-bucket-v25"; 
+    let bucket_name =
+            std::env::var("AWS_BUCKET_NAME").expect("AWS_BUCKET_NAME environment variable expected");
     
     let key = "sample.txt";
     let file_name = "sample.txt";
