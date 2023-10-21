@@ -28,17 +28,17 @@ sudo docker compose up -d --build
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
+| Bash | Navigate to the [bash scripts](./bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
 
 **2. Run Rust sample**
 
-The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.). You need to utilize a public s3 service bucket.
+The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public s3 service bucket.
 
-Therefore create from the [secrets.cfg.template](./secrets.cfg.template) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
+Therefore create from the [secrets.template.cfg](./temp/secrets.cfg.template) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
 Afterwards execute the following:
 
 ```bash
-source secrets.cfg
+source temp/secrets.cfg
 cargo run
 ```
 
