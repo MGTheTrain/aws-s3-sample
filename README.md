@@ -1,4 +1,4 @@
-# aws-s3-sample
+# rust-aws-s3-sample
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@ sudo docker compose up -d --build
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash scripts](./bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
+| Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
 
 **2. Run Rust sample**
 
