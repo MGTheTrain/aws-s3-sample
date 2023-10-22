@@ -1,3 +1,4 @@
 **/target
 **/volume
 secrets.cfg
+Cargo.lock
