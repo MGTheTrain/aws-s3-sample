@@ -36,24 +36,36 @@ In order to build and run the main executable run:
 ```bash
 cargo build
 
-# Example upload: 
-cargo.exe run -- upload -b blob.txt  -u sample.txt
-cargo.exe run -- upload --blob-name blob.txt --upload-file-path sample.txt 
+# Example blob upload: 
+RUST_LOG=info cargo run -- upload-blob -b blob.txt  -u sample.txt
+RUST_LOG=info cargo run -- upload-blob --blob-name blob.txt --upload-file-path sample.txt 
 
-# Example download: 
-cargo.exe run -- download -b blob.txt -d output/download.txt
-cargo.exe run -- download --blob-name blob.txt --download-file-path "output/download.txt"
+# Example blob download: 
+RUST_LOG=info cargo run -- download-blob -b blob.txt -d output/download.txt
+RUST_LOG=info cargo run -- download-blob --blob-name blob.txt --download-file-path "output/download.txt"
 
-# Example delete: 
-cargo.exe run -- delete -b blob.txt
-cargo.exe run -- delete --blob-name blob.txt
+# Example blob delete: 
+RUST_LOG=info cargo run -- delete-blob -b blob.txt
+RUST_LOG=info cargo run -- delete-blob --blob-name blob.txt
+
+# Example create bucket: 
+RUST_LOG=info cargo run -- create bucket
+RUST_LOG=info cargo run -- create bucket
+
+# Example show bucket: 
+RUST_LOG=info cargo run -- show-bucket
+RUST_LOG=info cargo run -- show-bucket
+
+# Example delete bucket: 
+RUST_LOG=info cargo run -- delete-bucket
+RUST_LOG=info cargo run -- delete-bucket
 
 # or running the executable  
 cp target/debug/aws-s3-storage .
 source secrets.cfg
 ./aws-s3-storage --help
-# Example upload (Note: Colored crates console logs might not work on certain terminals): 
-./aws-s3-storage upload --blob-name blob.txt --upload-file-path sample.txt 
+# Example blob upload (Note: Colored crates console logs might not work on certain terminals): 
+RUST_LOG=info ./aws-s3-storage upload-blob --blob-name blob.txt --upload-file-path sample.txt 
 ```
 
 ### Optional

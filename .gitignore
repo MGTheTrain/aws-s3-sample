@@ -2,3 +2,4 @@
 **/volume
 secrets.cfg
 Cargo.lock
+*exe

@@ -96,6 +96,8 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     match &args.operation {
         AWSS3BucketOperation::CreateBucket { } => {
             create_bucket(&client, &bucket_name, &region).await?;
+            colored_string = format!("Created bucket with name {}", bucket_name).blue();
+            info!("{}", colored_string);
         },
         AWSS3BucketOperation::ShowBucket { } => {
             show_buckets(&client).await?;
