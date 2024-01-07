@@ -2,9 +2,14 @@
 
 ## Table of Contents
 
-+ [Summary](#summary)
-+ [References](#references)
-+ [How to use](#how-to-use)
+- [Summary](#summary)
+- [References](#references)
+- [How to use](#how-to-use)
+  - [Rust](#rust)
+  - [Optional](#optional)
+    - [Initiate the Docker Compose cluster to launch a locally running Localstack Docker container](#initiate-the-docker-compose-cluster-to-launch-a-locally-running-localstack-docker-container)
+    - [Run tests](#run-tests)
+
 
 ## Summary
 
@@ -31,7 +36,7 @@ cargo test
 RUST_LOG=info cargo test
 ```
 
-In order to build and run the main executable run:
+Build and run the executable binary with:
 
 ```bash
 cargo build
@@ -70,7 +75,7 @@ RUST_LOG=info ./aws-s3-storage upload-blob --blob-name blob.txt --upload-file-pa
 
 ### Optional
 
-#### Run the docker compose cluster to have an localstack docker container locally running
+#### Initiate the Docker Compose cluster to launch a locally running Localstack Docker container
 
 ```bash
 sudo docker compose up -d --build
