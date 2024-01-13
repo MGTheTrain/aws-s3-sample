@@ -43,7 +43,6 @@ cargo build
 
 # Precondition for further actions on Aws S3 buckets - Example create bucket: 
 RUST_LOG=info cargo run -- create bucket
-RUST_LOG=info cargo run -- create bucket
 
 # Example blob upload: 
 RUST_LOG=info cargo run -- upload-blob -b blob.txt  -u assets/sample.txt
@@ -59,10 +58,7 @@ RUST_LOG=info cargo run -- delete-blob --blob-name blob.txt
 
 # Example show bucket: 
 RUST_LOG=info cargo run -- show-bucket
-RUST_LOG=info cargo run -- show-bucket
-
 # Example delete bucket: 
-RUST_LOG=info cargo run -- delete-bucket
 RUST_LOG=info cargo run -- delete-bucket
 
 # or running the executable  
