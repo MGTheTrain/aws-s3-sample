@@ -58,6 +58,7 @@ RUST_LOG=info cargo run -- delete-blob --blob-name blob.txt
 
 # Example show bucket: 
 RUST_LOG=info cargo run -- show-bucket
+
 # Example delete bucket: 
 RUST_LOG=info cargo run -- delete-bucket
 
