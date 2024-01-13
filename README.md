@@ -25,9 +25,9 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 
 ### Rust
 
-The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public s3 service bucket.
+The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the localstack docker container s3 service can not be used for local blob management tests (upload, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public s3 service bucket.
 
-Create from the [secrets.template.cfg](./secrets.template.cfg) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
+Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `<PLACEHOLDER_*>` values. The [test_aws_blob_handler.rs](./test/test_aws_blob_handler.rs) and [main.rs](./src/main.rs) will export the environment variables trough the `secrets.cfg` file.
 Afterwards execute the following to run the tests:
 
 ```bash
@@ -41,9 +41,13 @@ Build and run the executable binary with:
 ```bash
 cargo build
 
+# Precondition for further actions on Aws S3 buckets - Example create bucket: 
+RUST_LOG=info cargo run -- create bucket
+RUST_LOG=info cargo run -- create bucket
+
 # Example blob upload: 
-RUST_LOG=info cargo run -- upload-blob -b blob.txt  -u sample.txt
-RUST_LOG=info cargo run -- upload-blob --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info cargo run -- upload-blob -b blob.txt  -u assets/sample.txt
+RUST_LOG=info cargo run -- upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
 
 # Example blob download: 
 RUST_LOG=info cargo run -- download-blob -b blob.txt -d output/download.txt
@@ -52,10 +56,6 @@ RUST_LOG=info cargo run -- download-blob --blob-name blob.txt --download-file-pa
 # Example blob delete: 
 RUST_LOG=info cargo run -- delete-blob -b blob.txt
 RUST_LOG=info cargo run -- delete-blob --blob-name blob.txt
-
-# Example create bucket: 
-RUST_LOG=info cargo run -- create bucket
-RUST_LOG=info cargo run -- create bucket
 
 # Example show bucket: 
 RUST_LOG=info cargo run -- show-bucket
@@ -66,16 +66,16 @@ RUST_LOG=info cargo run -- delete-bucket
 RUST_LOG=info cargo run -- delete-bucket
 
 # or running the executable  
-cp target/debug/aws-s3-storage.exe . # On Windows OS when utilizing Git Bash or WSL
+cp target/debug/aws_s3_storage_sample.exe . # On Windows OS when utilizing Git Bash or WSL
 source secrets.cfg
-./aws-s3-storage --help
+./aws_s3_storage_sample --help
 # Example blob upload (Note: Colored crates console logs might not work on certain terminals): 
-RUST_LOG=info ./aws-s3-storage upload-blob --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info ./aws_s3_storage_sample upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
 ```
 
 ### Optional
 
-#### Initiate the docker-compose cluster to launch a Localstack Docker container
+#### Initiate the docker-compose cluster to launch a Localstack docker container
 
 ```bash
 sudo docker compose up -d --build
