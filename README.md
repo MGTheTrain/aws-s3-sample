@@ -69,7 +69,7 @@ RUST_LOG=info ./aws_s3_bucket_handler upload-blob --blob-name blob.txt --upload-
 
 ### Optional
 
-#### Initiate the docker compose cluster to launch a Localstack docker container
+#### Ramp up a Localstack docker container trough docker compose
 
 ```bash
 sudo docker compose up -d --build
