@@ -1,5 +1,5 @@
 [package]
-name = "aws_s3_storage_sample"
+name = "aws_s3_bucket_handler"
 version = "0.1.0"
 edition = "2021"
 

@@ -1,4 +1,4 @@
-# rust-aws-s3-sample
+# rust-aws-s3-bucket-handler
 
 ## Table of Contents
 
