@@ -63,11 +63,11 @@ RUST_LOG=info cargo run -- show-bucket
 RUST_LOG=info cargo run -- delete-bucket
 
 # or running the executable  
-cp target/debug/aws_s3_storage_sample.exe . # On Windows OS when utilizing Git Bash or WSL
+cp target/debug/aws_s3_bucket_handler.exe . # On Windows OS when utilizing Git Bash or WSL
 source secrets.cfg
-./aws_s3_storage_sample --help
+./aws_s3_bucket_handler --help
 # Example blob upload (Note: Colored crates console logs might not work on certain terminals): 
-RUST_LOG=info ./aws_s3_storage_sample upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
+RUST_LOG=info ./aws_s3_bucket_handler upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
 ```
 
 ### Optional
