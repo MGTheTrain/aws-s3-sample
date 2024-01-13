@@ -7,9 +7,6 @@
 - [How to use](#how-to-use)
   - [Rust](#rust)
   - [Optional](#optional)
-    - [Initiate the Docker Compose cluster to launch a locally running Localstack Docker container](#initiate-the-docker-compose-cluster-to-launch-a-locally-running-localstack-docker-container)
-    - [Run tests](#run-tests)
-
 
 ## Summary
 
@@ -72,7 +69,7 @@ RUST_LOG=info ./aws_s3_bucket_handler upload-blob --blob-name blob.txt --upload-
 
 ### Optional
 
-#### Initiate the docker-compose cluster to launch a Localstack docker container
+#### Initiate the docker compose cluster to launch a Localstack docker container
 
 ```bash
 sudo docker compose up -d --build
