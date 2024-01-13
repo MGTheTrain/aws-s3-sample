@@ -16,13 +16,12 @@ use std::{
     env, error,
     io::{self, Write},
     path::Path,
-}; // bring trait into scope
+}; 
 
 use clap::{Parser, Subcommand};
 
 use colored::Colorize;
 
-/// Provide arguments for
 #[derive(Parser, Debug)]
 #[clap(
     author = "MGTheTrain",
@@ -30,7 +29,6 @@ use colored::Colorize;
     about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) and bucket operations (show, create or delete buckets) with AWS S3 buckets."
 )]
 struct Cli {
-    /// the azure storage account container pperation
     #[clap(subcommand)]
     operation: AWSS3BucketOperation,
 }
@@ -77,7 +75,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     let env_file_path = "secrets.cfg";
     dotenv::from_path(env_file_path).ok();
 
-    // Define a list of environment variable names to check
     let env_vars_to_check = [
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
@@ -86,7 +83,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
         "AWS_BUCKET_NAME",
     ];
 
-    // Call the function to check if the environment variables are set
     if are_env_vars_set(&env_vars_to_check) {
         colored_string = "All environment variables are set.".blue();
         info!("{}", colored_string);
@@ -95,10 +91,8 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
         panic!("{}", colored_string);
     }
 
-    // Get default credentials
     let config = aws_config::load_from_env().await;
 
-    // Create an client client
     let client = Client::new(&config);
 
     let mut region = String::from("eu-central-1");
@@ -108,7 +102,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
     let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
 
-    // parse args
     let args = Cli::parse();
 
     match &args.operation {
@@ -150,8 +143,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
             let get_object_output =
                 get_object(&client, &bucket_name, &blob_name.clone().unwrap()).await?;
             let data = get_object_output.body.collect().await.unwrap().into_bytes();
-            // let contents = std::str::from_utf8(&data).unwrap(); // Note that this code assumes that the files are utf8 encoded plain text format.
-            // info!("Key: {key}, Contents: {contents}");
             write_bytes_to_file(&data, &download_file_path.clone().unwrap()).await?;
 
             colored_string = format!(
@@ -195,12 +186,9 @@ fn are_env_vars_set(env_var_names: &[&str]) -> bool {
 }
 
 async fn show_buckets(client: &Client) -> Result<(), Error> {
-    // List the first page of buckets in the account
     let response = client.list_buckets().send().await?;
 
-    // Check if the response returned any buckets
     if let Some(buckets) = response.buckets() {
-        // Print each bucket name out
         for bucket in buckets {
             let mut colored_string: colored::ColoredString;
             colored_string = format!("Bucket name: {}", bucket.name().unwrap()).blue();
@@ -262,7 +250,7 @@ async fn get_object(
 
 async fn write_bytes_to_file(bytes: &[u8], file_path: &str) -> Result<(), io::Error> {
     let mut file = fs::OpenOptions::new()
-        .create(true) // To create a new file
+        .create(true)
         .write(true)
         .open(file_path)?;
 
@@ -318,7 +306,6 @@ mod tests {
         let env_file_path = "secrets.cfg";
         dotenv::from_path(env_file_path).ok();
 
-        // Define a list of environment variable names to check
         let env_vars_to_check = [
             "AWS_ACCESS_KEY_ID",
             "AWS_SECRET_ACCESS_KEY",
@@ -327,7 +314,6 @@ mod tests {
             "AWS_BUCKET_NAME",
         ];
 
-        // Call the function to check if the environment variables are set
         if are_env_vars_set(&env_vars_to_check) {
             colored_string = "All environment variables are set.".blue();
             info!("{}", colored_string);
@@ -336,10 +322,8 @@ mod tests {
             panic!("{}", colored_string);
         }
 
-        // Get default credentials
         let config = aws_config::load_from_env().await;
 
-        // Create an client client
         let client = Client::new(&config);
 
         let mut region = String::from("eu-central-1");
@@ -378,8 +362,7 @@ mod tests {
             .unwrap()
             .into_bytes();
 
-        let contents = std::str::from_utf8(&data).unwrap(); // Note that this code assumes that the files are utf8 encoded plain text format.
-                                                            // info!("Key: {key}, Contents: {contents}");
+        let contents = std::str::from_utf8(&data).unwrap();
 
         assert!(write_bytes_to_file(&data, &file_path).await.is_ok());
         colored_string = format!(
