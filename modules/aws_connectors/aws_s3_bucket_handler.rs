@@ -1,0 +1,162 @@
+use aws_sdk_s3::{
+    error::SdkError,
+    operation::{
+        create_bucket::{CreateBucketError, CreateBucketOutput},
+        delete_object,
+        get_object::{GetObjectError, GetObjectOutput},
+        put_object::{PutObjectError, PutObjectOutput},
+    },
+    primitives::ByteStream,
+    types::{BucketLocationConstraint, CreateBucketConfiguration},
+    Client, Error,
+};
+use log::info;
+use std::fs;
+use std::{
+    io::{self, Write},
+    path::Path,
+};
+
+use colored::Colorize;
+
+pub struct AwsS3BucketHandler {
+    client: Client,
+    bucket_name: String,
+    region: String,
+}
+
+impl AwsS3BucketHandler {
+    pub async fn new(bucket_name: &str, region: &str) -> Result<Self, SdkError<CreateBucketError>> {
+        let config = aws_config::load_from_env().await;
+        let client = Client::new(&config);
+
+        Ok(Self {
+            client,
+            bucket_name: bucket_name.to_owned(),
+            region: region.to_owned(),
+        })
+    }
+
+    pub async fn create_bucket(&self) -> Result<CreateBucketOutput, SdkError<CreateBucketError>> {
+        let constraint = BucketLocationConstraint::from(&self.region as &str);
+        let cfg = CreateBucketConfiguration::builder()
+            .location_constraint(constraint)
+            .build();
+        let colored_string = format!("About to create bucket with name {}", &self.bucket_name).blue();
+        info!("{}", colored_string);
+        self.client
+            .create_bucket()
+            .create_bucket_configuration(cfg)
+            .bucket(&self.bucket_name)
+            .send()
+            .await
+    }
+
+    pub async fn show_buckets(&self) -> Result<(), Error> {
+        let response = self.client.list_buckets().send().await?;
+
+        if let Some(buckets) = response.buckets() {
+            for bucket in buckets {
+                let mut colored_string: colored::ColoredString;
+                colored_string = format!("Bucket name: {}", bucket.name().unwrap()).blue();
+                info!("{}", colored_string);
+            }
+        } else {
+            let mut colored_string: colored::ColoredString;
+            colored_string = "You don't have any buckets!".red();
+            info!("{}", colored_string);
+        }
+        Ok(())
+    }
+
+    pub async fn upload_blob(
+        &self,
+        blob_name: &str,
+        upload_file_path: &str,
+    ) -> Result<(), SdkError<PutObjectError>> {
+        let body = ByteStream::from_path(Path::new(upload_file_path)).await;
+        self.client
+            .put_object()
+            .bucket(&self.bucket_name)
+            .key(blob_name)
+            .body(body.unwrap())
+            .send()
+            .await?;
+
+        let colored_string = format!(
+            "Uploaded file {} with object name {} to bucket {}",
+            upload_file_path, blob_name, self.bucket_name
+        )
+        .blue();
+        info!("{}", colored_string);
+
+        Ok(())
+    }
+
+    pub async fn download_blob(
+        &self,
+        blob_name: &str,
+        download_file_path: &str,
+    ) -> Result<(), SdkError<GetObjectError>> {
+        let get_object_output = self
+            .client
+            .get_object()
+            .bucket(&self.bucket_name)
+            .key(blob_name)
+            .send()
+            .await?;
+        let data = get_object_output.body.collect().await.unwrap().into_bytes();
+        _ = self.write_bytes_to_file(&data, download_file_path).await;
+
+        let colored_string = format!(
+            "Downloaded file {} with object name {} from bucket {}",
+            download_file_path, blob_name, self.bucket_name
+        )
+        .blue();
+        info!("{}", colored_string);
+
+        Ok(())
+    }
+
+    pub async fn delete_blob(&self, blob_name: &str) -> Result<(), Error> {
+        self.client
+            .delete_object()
+            .bucket(&self.bucket_name)
+            .key(blob_name)
+            .send()
+            .await?;
+
+        let colored_string = format!(
+            "Object {} deleted from {} bucket.",
+            blob_name, self.bucket_name
+        )
+        .blue();
+        info!("{}", colored_string);
+
+        Ok(())
+    }
+
+    pub async fn delete_bucket(&self) -> Result<(), Error> {
+        self.client
+            .delete_bucket()
+            .bucket(&self.bucket_name)
+            .send()
+            .await?;
+
+        let colored_string = format!("Bucket {} deleted", self.bucket_name).blue();
+        info!("{}", colored_string);
+
+        Ok(())
+    }
+
+    pub async fn write_bytes_to_file(&self, bytes: &[u8], file_path: &str) -> Result<(), io::Error> {
+        let mut file = fs::OpenOptions::new()
+            .create(true)
+            .write(true)
+            .open(file_path)?;
+    
+        file.write_all(&bytes)?;
+    
+        Ok(())
+    }
+}
