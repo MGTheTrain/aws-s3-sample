@@ -79,4 +79,4 @@ sudo docker compose up -d --build
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash localstack](./localstack/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
+| Bash | Navigate to the [bash localstack-demo](./localstack-demo/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
