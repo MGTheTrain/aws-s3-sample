@@ -21,6 +21,7 @@ jobs:
         run: echo "semantic_version for branch '${{ github.base_ref }}' is '${{ steps.branch_check.outputs.semantic_version }}'"
     outputs:
       semantic_version: ${{ steps.branch_check.outputs.semantic_version }}
+  # Test, scan, build and push Rust related repos or compiled binaries
   create-git-tags-from-version-file-job:
     runs-on: ubuntu-latest
     needs: [set_stage]
@@ -28,6 +29,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Create git tag from version file
-        uses: MGTheTrain/github-actions/.github/actions/create-git-tag-from-version-file@main
+        uses: MGTheTrain/public-github-actions/.github/actions/create-git-tag-from-version-file@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
