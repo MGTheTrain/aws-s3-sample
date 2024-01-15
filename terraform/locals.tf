@@ -3,7 +3,7 @@ locals {
     env         = "${var.environment}",
     team        = "${var.team}",
     owner       = "MGTheTrain",
-    project     = "rust-azure-blob-storage-handler",
+    project     = "rust-aws-s3-bucket-handler",
     app-purpose = "Deployment of temporary integration test environment",
     Stage       = "${var.environment}"
   }
