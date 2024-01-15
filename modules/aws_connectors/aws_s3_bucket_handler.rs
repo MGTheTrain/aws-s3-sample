@@ -21,7 +21,7 @@
 // SOFTWARE.
 //
 // Maintainers:
-// - MGTheTrain 
+// - MGTheTrain
 //
 // Contributors:
 // - TBD
@@ -70,7 +70,8 @@ impl AwsS3BucketHandler {
         let cfg = CreateBucketConfiguration::builder()
             .location_constraint(constraint)
             .build();
-        let colored_string = format!("About to create bucket with name {}", &self.bucket_name).blue();
+        let colored_string =
+            format!("About to create bucket with name {}", &self.bucket_name).blue();
         info!("{}", colored_string);
         self.client
             .create_bucket()
@@ -177,14 +178,18 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn write_bytes_to_file(&self, bytes: &[u8], file_path: &str) -> Result<(), io::Error> {
+    pub async fn write_bytes_to_file(
+        &self,
+        bytes: &[u8],
+        file_path: &str,
+    ) -> Result<(), io::Error> {
         let mut file = fs::OpenOptions::new()
             .create(true)
             .write(true)
             .open(file_path)?;
-    
+
         file.write_all(&bytes)?;
-    
+
         Ok(())
     }
 }

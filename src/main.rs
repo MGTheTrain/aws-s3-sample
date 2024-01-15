@@ -21,13 +21,13 @@
 // SOFTWARE.
 //
 // Maintainers:
-// - MGTheTrain 
+// - MGTheTrain
 //
 // Contributors:
 // - TBD
 
 use log::info;
-use std::error; 
+use std::error;
 
 use clap::{Parser, Subcommand};
 use colored::Colorize;
@@ -141,11 +141,17 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
             blob_name,
             download_file_path,
         } => {
-            aws_s3_bucket_handler.download_blob(
-                &blob_name.clone().unwrap(), &download_file_path.clone().unwrap()).await?;
+            aws_s3_bucket_handler
+                .download_blob(
+                    &blob_name.clone().unwrap(),
+                    &download_file_path.clone().unwrap(),
+                )
+                .await?;
         }
         AwsS3BucketOperation::DeleteBlob { blob_name } => {
-            aws_s3_bucket_handler.delete_blob(&blob_name.clone().unwrap()).await?;
+            aws_s3_bucket_handler
+                .delete_blob(&blob_name.clone().unwrap())
+                .await?;
         }
         _ => {
             colored_string = "Error: Operation not supported".red();
