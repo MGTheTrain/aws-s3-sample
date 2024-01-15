@@ -72,8 +72,8 @@ mod tests {
         let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
 
         let blob_name = "sample.txt"; // AWS S3 Bucket terminology would be "key" for blob_name
-        let upload_file_path = "assets/sample.txt";
-        let download_file_path = "output/sample-copy.txt";
+        let upload_file_path = "test/assets/sample.txt";
+        let download_file_path = "test/output/sample-copy.txt";
 
         let aws_s3_bucket_handler = AwsS3BucketHandler::new(&bucket_name, &region).await?;
         aws_s3_bucket_handler.create_bucket().await?;
