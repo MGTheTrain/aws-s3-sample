@@ -1,4 +1,4 @@
-name: CI/CT workflow for Rust libraries packaged via cargo
+name: Create git tag, run scans and tests on Rust rpos
 
 on:
   push:
