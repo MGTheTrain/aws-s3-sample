@@ -22,7 +22,7 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 
 ### Precondition
 
-Either an Azure Storage Account service container needs to be deployed and accessible or a localstack docker container can be utilized. Therefore:
+Either AWS can be utilized for deploying AWS S3 buckets or a localstack docker container can be utilized. Therefore:
 
 ```bash
 cd localstack-demo
