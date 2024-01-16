@@ -20,19 +20,16 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 
 ## How to use
 
-### Local setup
+### Precondition
 
-#### Precondition
-
-- An Azure Storage Account service container needs to be deployed and accessible or 
-- a localstack docker container can be utilized. Therefore:
+Either an Azure Storage Account service container needs to be deployed and accessible or a localstack docker container can be utilized. Therefore:
 
 ```bash
 cd localstack-demo
 sudo docker compose up -d --build
 ```
 
-#### Build and compiled source code 
+### Build and compiled source code 
 
 Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `<PLACEHOLDER_*>` values. The [test_aws_blob_handler.rs](./test/test_aws_blob_handler.rs) and [main.rs](./src/main.rs) will export the environment variables trough the `secrets.cfg` file.
 Afterwards execute the following to run the tests:
@@ -77,7 +74,7 @@ source secrets.cfg
 RUST_LOG=info ./aws_s3_bucket_handler upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
 ```
 
-#### (Optional) Bash scripts for testing out communication with localstack docker container
+### (Optional) Bash scripts for testing out communication with localstack docker container
 
 | Scripting language | Description | 
 |----------|----------|
