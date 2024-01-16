@@ -1,4 +1,4 @@
-name: Create git tag, run scans and tests on Rust rpos
+name: Create git tag, run scans and tests on Rust repos
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
     outputs:
       semantic_version: ${{ steps.branch_check.outputs.semantic_version }}
   # Test, scan, build and push Rust related repos or compiled binaries
-  ci-ct-job-for-rust-libraries:
+  ci-ct-job-for-rust-repos:
     runs-on: ubuntu-latest
     needs: [set_stage]
     steps:
