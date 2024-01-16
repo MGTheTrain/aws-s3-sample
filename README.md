@@ -23,7 +23,7 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 Either AWS can be utilized for deploying AWS S3 buckets or a localstack docker container (**NOTE**: experiments on Windows 10 OS with Virtual Box enabled docker has failed) can be utilized. Therefore:
 
 ```bash
-cd localstack-demo
+cd devops/docker-compose
 sudo docker compose up -d --build
 ```
 
@@ -76,4 +76,4 @@ RUST_LOG=info ./aws_s3_bucket_handler upload-blob --blob-name blob.txt --upload-
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash localstack-demo](./localstack-demo/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
+| Bash | Navigate to the [bash localstack-demo](./devops/docker-compose/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the localstack docker container s3 service. | 
