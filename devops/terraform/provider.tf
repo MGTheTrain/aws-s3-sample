@@ -1,3 +1,5 @@
-provider "azurerm" {
-  features {}
+provider "aws" {}
+
+terraform {
+  experiments = [variable_validation]
 }
