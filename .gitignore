@@ -4,4 +4,4 @@ secrets.cfg
 Cargo.lock
 *exe
 .terraform*
-terraform.tfstate
+terraform.tfstate*
