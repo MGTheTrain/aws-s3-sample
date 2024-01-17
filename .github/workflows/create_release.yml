@@ -55,11 +55,11 @@ jobs:
 
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
-          sed "s|PLACEHOLDER_AWS_ACCESS_KEY_ID|'${{ secrets.AWS_ACCESS_KEY_ID }}'|g" "$template_file" > "$output_file"
-          sed -i "s|PLACEHOLDER_AWS_SECRET_ACCESS_KEY|'${{ secrets.AWS_SECRET_ACCESS_KEY }}'|g" "$output_file"
-          sed -i "s|PLACEHOLDER_AWS_REGION|'${{ secrets.AWS_REGION }}'|g" "$output_file"
-          sed -i "s|PLACEHOLDER_AWS_ENDPOINT_URL|'${aws_endpoint_url}'|g" "$output_file"
-          sed -i "s|PLACEHOLDER_AWS_BUCKET_NAME|'${aws_bucket_name}'|g" "$output_file"
+          cat $template_file | sed "s|PLACEHOLDER_AWS_ACCESS_KEY_ID|${{ secrets.AWS_ACCESS_KEY_ID }}|g" > $output_file
+          sed -i "s|PLACEHOLDER_AWS_SECRET_ACCESS_KEY|${{ secrets.AWS_SECRET_ACCESS_KEY }}|g" $output_file
+          sed -i "s|PLACEHOLDER_AWS_REGION|${{ secrets.AWS_REGION }}|g" $output_file
+          sed -i "s|PLACEHOLDER_AWS_ENDPOINT_URL|${aws_endpoint_url}|g" $output_file
+          sed -i "s|PLACEHOLDER_AWS_BUCKET_NAME|${aws_bucket_name}|g" $output_file
         working-directory: ./  
       - name: Test Rust repository
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
