@@ -49,7 +49,7 @@ mod tests {
         let env_vars_to_check = [
             "AWS_ACCESS_KEY_ID",
             "AWS_SECRET_ACCESS_KEY",
-            "AWS_REGION",
+            "AWS_DEFAULT_REGION",
             "AWS_BUCKET_NAME",
         ];
 
@@ -64,8 +64,8 @@ mod tests {
         let config = aws_config::load_from_env().await;
 
         let mut region = String::from("eu-central-1");
-        colored_string = "Error: AWS_REGION environment variable expected".red();
-        region = std::env::var("AWS_REGION").expect(&colored_string.to_string());
+        colored_string = "Error: AWS_DEFAULT_REGION environment variable expected".red();
+        region = std::env::var("AWS_DEFAULT_REGION").expect(&colored_string.to_string());
 
         colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
         let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());

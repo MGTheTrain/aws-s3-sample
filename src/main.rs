@@ -92,7 +92,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
         "AWS_DEFAULT_REGION",
-        "AWS_ENDPOINT_URL",
         "AWS_BUCKET_NAME",
     ];
 
