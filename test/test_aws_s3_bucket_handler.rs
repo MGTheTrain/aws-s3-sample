@@ -46,16 +46,12 @@ mod tests {
         let env_file_path = "secrets.cfg";
         dotenv::from_path(env_file_path).ok();
 
-<<<<<<< HEAD
         let env_vars_to_check = [
             "AWS_ACCESS_KEY_ID",
             "AWS_SECRET_ACCESS_KEY",
             "AWS_REGION",
             "AWS_BUCKET_NAME",
         ];
-=======
-        let env_vars_to_check = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"];
->>>>>>> de91b9d46a721301997a8ee556d476ebee83ca97
 
         if are_env_vars_set(&env_vars_to_check) {
             colored_string = "All environment variables are set.".blue();
