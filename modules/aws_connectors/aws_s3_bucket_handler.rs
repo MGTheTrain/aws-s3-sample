@@ -90,7 +90,7 @@ impl AwsS3BucketHandler {
             colored_string = format!("Bucket name: {}", bucket.name().unwrap_or_default()).blue();
             info!("{}", colored_string);
         }
-        
+
         Ok(())
     }
 
