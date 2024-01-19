@@ -50,7 +50,6 @@ mod tests {
             "AWS_ACCESS_KEY_ID",
             "AWS_SECRET_ACCESS_KEY",
             "AWS_REGION",
-            "AWS_BUCKET_NAME",
         ];
 
         if are_env_vars_set(&env_vars_to_check) {
@@ -65,8 +64,7 @@ mod tests {
         colored_string = "Error: AWS_REGION environment variable expected".red();
         region = std::env::var("AWS_REGION").expect(&colored_string.to_string());
 
-        colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
-        let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
+        let bucket_name = "test-bucket-123123424123";
 
         let blob_name = "sample.txt"; // AWS S3 Bucket terminology would be "key" for blob_name
         let upload_file_path = "test/assets/sample.txt";
