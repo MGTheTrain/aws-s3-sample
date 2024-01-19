@@ -84,17 +84,13 @@ impl AwsS3BucketHandler {
     pub async fn show_buckets(&self) -> Result<(), Error> {
         let response = self.client.list_buckets().send().await?;
 
-        if let Some(buckets) = response.buckets() {
-            for bucket in buckets {
-                let mut colored_string: colored::ColoredString;
-                colored_string = format!("Bucket name: {}", bucket.name().unwrap()).blue();
-                info!("{}", colored_string);
-            }
-        } else {
-            let mut colored_string: colored::ColoredString;
-            colored_string = "You don't have any buckets!".red();
+        let buckets = response.buckets();
+        for bucket in buckets.iter() {
+            let colored_string: colored::ColoredString;
+            colored_string = format!("Bucket name: {}", bucket.name().unwrap_or_default()).blue();
             info!("{}", colored_string);
         }
+        
         Ok(())
     }
 
