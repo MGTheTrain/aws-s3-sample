@@ -9,7 +9,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
   AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
-  AWS_REGION: 'eu-central-1'
+  AWS_REGION: '${{ secrets.AWS_REGION }}'
 
 jobs:
   ci-ct-job-for-rust-repos:
@@ -33,13 +33,12 @@ jobs:
           sudo apt-get install -y jq
 
           cd ./devops/terraform
-          aws_endpoint_url=$(terraform output -json bucket_domain_name_list | jq -r --argjson index 0 '.[$index]')
           aws_bucket_name=$(terraform output -json bucket_name_list | jq -r --argjson index 0 '.[$index]')
           cd -
 
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
-          cat $template_file | sed "s+PLACEHOLDER_AWS_ACCESS_KEY_ID+${{ env.AWS_ACCESS_KEY_ID }}+g" > $output_file
+          cat $template_file | sed "s|PLACEHOLDER_AWS_ACCESS_KEY_ID|${{ env.AWS_ACCESS_KEY_ID }}|g" > $output_file
           sed -i "s|PLACEHOLDER_AWS_SECRET_ACCESS_KEY|${{ env.AWS_SECRET_ACCESS_KEY }}|g" $output_file
           sed -i "s|PLACEHOLDER_AWS_REGION|${{ env.AWS_REGION }}|g" $output_file
           sed -i "s|PLACEHOLDER_AWS_BUCKET_NAME|${aws_bucket_name}|g" $output_file
