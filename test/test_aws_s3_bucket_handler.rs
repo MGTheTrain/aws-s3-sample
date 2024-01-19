@@ -72,7 +72,8 @@ mod tests {
         let upload_file_path = "test/assets/sample.txt";
         let download_file_path = "test/output/sample-copy.txt";
 
-        let aws_s3_bucket_handler = AwsS3BucketHandler::new(&bucket_name, String::from(region)).await?;
+        let aws_s3_bucket_handler =
+            AwsS3BucketHandler::new(&bucket_name, String::from(region)).await?;
         aws_s3_bucket_handler.create_bucket().await?;
         aws_s3_bucket_handler.show_buckets().await?;
         aws_s3_bucket_handler
