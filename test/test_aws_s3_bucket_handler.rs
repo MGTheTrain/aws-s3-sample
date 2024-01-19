@@ -73,7 +73,7 @@ mod tests {
         let download_file_path = "test/output/sample-copy.txt";
 
         let aws_s3_bucket_handler = AwsS3BucketHandler::new(&bucket_name, String::from(region)).await?;
-        // aws_s3_bucket_handler.create_bucket().await?;
+        aws_s3_bucket_handler.create_bucket().await?;
         aws_s3_bucket_handler.show_buckets().await?;
         aws_s3_bucket_handler
             .upload_blob(&blob_name, &upload_file_path)
@@ -83,7 +83,7 @@ mod tests {
             .download_blob(&blob_name, &download_file_path)
             .await?;
         aws_s3_bucket_handler.delete_blob(&blob_name).await?;
-        // aws_s3_bucket_handler.delete_bucket().await?;
+        aws_s3_bucket_handler.delete_bucket().await?;
 
         Ok(())
     }
