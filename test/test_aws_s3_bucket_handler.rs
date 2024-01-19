@@ -65,8 +65,6 @@ mod tests {
         colored_string = "Error: AWS_REGION environment variable expected".red();
         region = std::env::var("AWS_REGION").expect(&colored_string.to_string());
 
-        let config = aws_config::load_from_env().await;
-
         colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
         let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
 
@@ -84,7 +82,7 @@ mod tests {
         aws_s3_bucket_handler
             .download_blob(&blob_name, &download_file_path)
             .await?;
-        aws_s3_bucket_handler.delete_blob(&blob_name).await?;
+        // aws_s3_bucket_handler.delete_blob(&blob_name).await?;
         // aws_s3_bucket_handler.delete_bucket().await?;
 
         Ok(())

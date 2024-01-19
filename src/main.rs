@@ -103,8 +103,6 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
         panic!("{}", colored_string);
     }
 
-    let config = aws_config::load_from_env().await;
-
     colored_string = "Error: AWS_REGION environment variable expected".red();
     let region = std::env::var("AWS_REGION").expect(&colored_string.to_string()); // e.g. eu-central-1
 
