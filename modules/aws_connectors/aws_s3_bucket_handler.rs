@@ -26,6 +26,7 @@
 // Contributors:
 // - TBD
 
+use aws_config::{meta::region::{RegionProviderChain, ProvideRegion}, Region};
 use aws_sdk_s3::{
     error::SdkError,
     operation::{
@@ -39,7 +40,7 @@ use aws_sdk_s3::{
     Client, Error,
 };
 use log::info;
-use std::fs;
+use std::{fs, borrow::Borrow};
 use std::{
     io::{self, Write},
     path::Path,
@@ -54,8 +55,9 @@ pub struct AwsS3BucketHandler {
 }
 
 impl AwsS3BucketHandler {
-    pub async fn new(bucket_name: &str, region: &str) -> Result<Self, SdkError<CreateBucketError>> {
-        let config = aws_config::load_from_env().await;
+    pub async fn new(bucket_name: &str, region: String) -> Result<Self, SdkError<CreateBucketError>> {
+        let region_provider = RegionProviderChain::first_try(Region::new(region.clone()));
+        let config = aws_config::from_env().region(region_provider).load().await;
         let client = Client::new(&config);
 
         Ok(Self {

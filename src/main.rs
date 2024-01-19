@@ -109,7 +109,7 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
     let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
 
-    let aws_s3_bucket_handler = AwsS3BucketHandler::new(&bucket_name, &region).await?;
+    let aws_s3_bucket_handler = AwsS3BucketHandler::new(&bucket_name, String::from(region)).await?;
 
     let args = Cli::parse();
 
