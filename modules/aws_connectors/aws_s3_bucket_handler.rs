@@ -21,11 +21,15 @@
 // SOFTWARE.
 //
 // Maintainers:
-// - MGTheTrain 
+// - MGTheTrain
 //
 // Contributors:
 // - TBD
 
+use aws_config::{
+    meta::region::{ProvideRegion, RegionProviderChain},
+    Region,
+};
 use aws_sdk_s3::{
     error::SdkError,
     operation::{
@@ -39,7 +43,7 @@ use aws_sdk_s3::{
     Client, Error,
 };
 use log::info;
-use std::fs;
+use std::{borrow::Borrow, fs};
 use std::{
     io::{self, Write},
     path::Path,
@@ -54,8 +58,12 @@ pub struct AwsS3BucketHandler {
 }
 
 impl AwsS3BucketHandler {
-    pub async fn new(bucket_name: &str, region: &str) -> Result<Self, SdkError<CreateBucketError>> {
-        let config = aws_config::load_from_env().await;
+    pub async fn new(
+        bucket_name: &str,
+        region: String,
+    ) -> Result<Self, SdkError<CreateBucketError>> {
+        let region_provider = RegionProviderChain::first_try(Region::new(region.clone()));
+        let config = aws_config::from_env().region(region_provider).load().await;
         let client = Client::new(&config);
 
         Ok(Self {
@@ -70,7 +78,8 @@ impl AwsS3BucketHandler {
         let cfg = CreateBucketConfiguration::builder()
             .location_constraint(constraint)
             .build();
-        let colored_string = format!("About to create bucket with name {}", &self.bucket_name).blue();
+        let colored_string =
+            format!("About to create bucket with name {}", &self.bucket_name).blue();
         info!("{}", colored_string);
         self.client
             .create_bucket()
@@ -83,17 +92,13 @@ impl AwsS3BucketHandler {
     pub async fn show_buckets(&self) -> Result<(), Error> {
         let response = self.client.list_buckets().send().await?;
 
-        if let Some(buckets) = response.buckets() {
-            for bucket in buckets {
-                let mut colored_string: colored::ColoredString;
-                colored_string = format!("Bucket name: {}", bucket.name().unwrap()).blue();
-                info!("{}", colored_string);
-            }
-        } else {
-            let mut colored_string: colored::ColoredString;
-            colored_string = "You don't have any buckets!".red();
+        let buckets = response.buckets();
+        for bucket in buckets.iter() {
+            let colored_string: colored::ColoredString;
+            colored_string = format!("Bucket name: {}", bucket.name().unwrap_or_default()).blue();
             info!("{}", colored_string);
         }
+
         Ok(())
     }
 
@@ -177,14 +182,18 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn write_bytes_to_file(&self, bytes: &[u8], file_path: &str) -> Result<(), io::Error> {
+    pub async fn write_bytes_to_file(
+        &self,
+        bytes: &[u8],
+        file_path: &str,
+    ) -> Result<(), io::Error> {
         let mut file = fs::OpenOptions::new()
             .create(true)
             .write(true)
             .open(file_path)?;
-    
+
         file.write_all(&bytes)?;
-    
+
         Ok(())
     }
 }
