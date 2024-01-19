@@ -61,7 +61,6 @@ mod tests {
             panic!("{}", colored_string);
         }
 
-        
         let mut region = String::from("eu-central-1");
         colored_string = "Error: AWS_REGION environment variable expected".red();
         region = std::env::var("AWS_REGION").expect(&colored_string.to_string());
