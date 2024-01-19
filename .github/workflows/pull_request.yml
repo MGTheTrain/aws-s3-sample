@@ -17,17 +17,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      # - name: Terraform Init
-      #   id: init
-      #   run: |
-      #     terraform init 
-      #     # AWS S3 bucket backend
-      #   working-directory: ./devops/terraform
-      # - name: Terraform Apply
-      #   id: apply
-      #   run: terraform apply --auto-approve
-      #   continue-on-error: false
-      #   working-directory: ./devops/terraform
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init 
+          # AWS S3 bucket backend
+        working-directory: ./devops/terraform
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply --auto-approve
+        continue-on-error: false
+        working-directory: ./devops/terraform
       - name: Resolve terraform outputs and render template
         run: |
           sudo apt-get install -y jq
@@ -47,8 +47,8 @@ jobs:
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
         with:
           WORKING_DIRECTORY: ./
-      # - name: Terraform Destroy
-      #   id: destroy
-      #   run: terraform destroy --auto-approve
-      #   continue-on-error: false
-      #   working-directory: ./devops/terraform
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy --auto-approve
+        continue-on-error: false
+        working-directory: ./devops/terraform
