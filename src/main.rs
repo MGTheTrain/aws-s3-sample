@@ -91,7 +91,7 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     let env_vars_to_check = [
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
-        "AWS_DEFAULT_REGION",
+        "AWS_REGION",
         "AWS_BUCKET_NAME",
     ];
 
@@ -105,8 +105,8 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
 
     let config = aws_config::load_from_env().await;
 
-    colored_string = "Error: AWS_DEFAULT_REGION environment variable expected".red();
-    let region = std::env::var("AWS_DEFAULT_REGION").expect(&colored_string.to_string()); // e.g. eu-central-1
+    colored_string = "Error: AWS_REGION environment variable expected".red();
+    let region = std::env::var("AWS_REGION").expect(&colored_string.to_string()); // e.g. eu-central-1
 
     colored_string = "Error: AWS_BUCKET_NAME environment variable expected".red();
     let bucket_name = std::env::var("AWS_BUCKET_NAME").expect(&colored_string.to_string());
