@@ -21,7 +21,7 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 ### Precondition
 
 Either 
-- AWS can be utilized for deploying AWS S3 buckets or 
+- AWS can be utilized for deploying an AWS S3 bucket or 
 - a localstack docker container can be utilized. 
 
 In order to ramp up the localstack container execute:
