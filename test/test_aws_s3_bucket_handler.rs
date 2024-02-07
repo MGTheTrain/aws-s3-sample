@@ -43,9 +43,6 @@ mod tests {
         env_logger::init();
         let mut colored_string: colored::ColoredString;
 
-        let env_file_path = "secrets.cfg";
-        dotenv::from_path(env_file_path).ok();
-
         let env_vars_to_check = [
             "AWS_ACCESS_KEY_ID",
             "AWS_SECRET_ACCESS_KEY",
@@ -79,7 +76,7 @@ mod tests {
 
         let aws_s3_bucket_handler =
             AwsS3BucketHandler::new(&bucket_name, String::from(region)).await?;
-        // aws_s3_bucket_handler.create_bucket().await?;
+        aws_s3_bucket_handler.create_bucket().await?;
         aws_s3_bucket_handler.show_buckets().await?;
         aws_s3_bucket_handler
             .upload_blob(&blob_name, &upload_file_path)
@@ -89,7 +86,7 @@ mod tests {
             .download_blob(&blob_name, &download_file_path)
             .await?;
         aws_s3_bucket_handler.delete_blob(&blob_name).await?;
-        // aws_s3_bucket_handler.delete_bucket().await?;
+        aws_s3_bucket_handler.delete_bucket().await?;
 
         Ok(())
     }

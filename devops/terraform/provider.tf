@@ -1,6 +1,10 @@
-provider "aws" {}
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
 
-# Local setup  with terraform version < 1.2
-# terraform {
-#   experiments = [variable_validation]
-# }
+provider "aws" {}
