@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add [devcontainer.json](./.devcontainer/devcontainer.json)
 
+## Removed
+
+- Eliminate the requirement to mandate the rendering of the `secrets.cfg` file from [secrets.template.cfg](./templates/secrets.template.cfg) in the workflow. Adjust [test_aws_s3_bucket_handler.rs](./test/test_aws_s3_bucket_handler.rs) accordingly
+
 ## [0.1.3] - 28-01-2024
 
 ### Changed
