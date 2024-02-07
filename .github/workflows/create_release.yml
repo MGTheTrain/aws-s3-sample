@@ -33,26 +33,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Terraform Init
-        id: init
+      - name: Render template
         run: |
-          terraform init 
-          # AWS S3 bucket backend
-        working-directory: ./devops/terraform
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply --auto-approve
-        continue-on-error: false
-        working-directory: ./devops/terraform
-      - name: Resolve terraform outputs and render template
-        run: |
-          sudo apt-get install -y jq
-
-          cd ./devops/terraform
-          aws_endpoint_url=$(terraform output -json bucket_domain_name_list | jq -r --argjson index 0 '.[$index]')
-          aws_bucket_name=$(terraform output -json bucket_name_list | jq -r --argjson index 0 '.[$index]')
-          cd -
-
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
           cat $template_file | sed "s+PLACEHOLDER_AWS_ACCESS_KEY_ID+${{ env.AWS_ACCESS_KEY_ID }}+g" > $output_file
@@ -64,11 +46,6 @@ jobs:
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
         with:
           WORKING_DIRECTORY: ./
-      - name: Terraform Destroy
-        id: destroy
-        run: terraform destroy --auto-approve
-        continue-on-error: false
-        working-directory: ./devops/terraform
   create-git-tags-from-version-file-job:
     runs-on: ubuntu-latest
     needs: [set-gh-outputs]
