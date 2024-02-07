@@ -35,10 +35,11 @@ sudo docker compose up -d --build
 
 ### Build and run compiled source code 
 
-Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `PLACEHOLDER_*` values. The [test_aws_blob_handler.rs](./test/test_aws_blob_handler.rs) and [main.rs](./src/main.rs) will export the environment variables trough the `secrets.cfg` file.
+Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `PLACEHOLDER_*` values. The [test_aws_blob_handler.rs](./test/test_aws_blob_handler.rs) and [main.rs](./src/main.rs) require environment variables listed in the `secrets.cfg` file.
 Afterwards execute the following to run the tests:
 
 ```bash
+source secrets.cfg # or export environment variables listed in the the template.secrets.cfg manually
 cargo test
 # for more logs execute
 RUST_LOG=info cargo test
@@ -47,25 +48,27 @@ RUST_LOG=info cargo test
 Build and run the executable binary with:
 
 ```bash
-# Precondition for further actions on Aws S3 buckets - Example create bucket: 
+source secrets.cfg # or export environment variables listed in the the template.secrets.cfg manually
+
+# Example create bucket 
 RUST_LOG=info cargo run -- create-bucket
 
-# Example blob upload: 
+# Example blob upload
 RUST_LOG=info cargo run -- upload-blob -b blob.txt  -u assets/sample.txt
 RUST_LOG=info cargo run -- upload-blob --blob-name blob.txt --upload-file-path assets/sample.txt 
 
-# Example blob download: 
+# Example blob download
 RUST_LOG=info cargo run -- download-blob -b blob.txt -d output/download.txt
 RUST_LOG=info cargo run -- download-blob --blob-name blob.txt --download-file-path "output/download.txt"
 
-# Example blob delete: 
+# Example blob delete
 RUST_LOG=info cargo run -- delete-blob -b blob.txt
 RUST_LOG=info cargo run -- delete-blob --blob-name blob.txt
 
-# Example show bucket: 
+# Example show bucket
 RUST_LOG=info cargo run -- show-bucket
 
-# Example delete bucket: 
+# Example delete bucket
 RUST_LOG=info cargo run -- delete-bucket
 
 #####################################################################################################################
