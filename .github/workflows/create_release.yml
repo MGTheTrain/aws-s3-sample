@@ -33,19 +33,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Render template
-        run: |
-          template_file="templates/secrets.template.cfg"
-          output_file="secrets.cfg"
-          cat $template_file | sed "s+PLACEHOLDER_AWS_ACCESS_KEY_ID+${{ env.AWS_ACCESS_KEY_ID }}+g" > $output_file
-          sed -i "s+PLACEHOLDER_AWS_SECRET_ACCESS_KEY+${{ env.AWS_SECRET_ACCESS_KEY }}+g" $output_file
-          sed -i "s+PLACEHOLDER_AWS_REGION+${{ env.AWS_REGION }}+g" $output_file
-          sed -i "s+PLACEHOLDER_AWS_BUCKET_NAME+sample-bucket7000+g" $output_file
-        working-directory: ./  
       - name: Test Rust repository
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
         with:
           WORKING_DIRECTORY: ./
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_BUCKET_NAME: sample-bucket7000
   create-git-tags-from-version-file-job:
     runs-on: ubuntu-latest
     needs: [set-gh-outputs]
