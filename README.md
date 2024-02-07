@@ -4,7 +4,7 @@
 
 - [Summary](#summary)
 - [References](#references)
-- [How to use](#how-to-use)
+- [Getting started](#getting-started)
 
 ## Summary
 
@@ -16,13 +16,13 @@ Repository demonstrating how to manage blobs in AWS S3 service buckets with Rust
 - [The AWS SDK for Rust ](https://www.serverlessguru.com/blog/aws-sdk-for-rust-getting-started)
 - [Amazon S3 examples using SDK for Rust](https://docs.aws.amazon.com/sdk-for-rust/latest/dg/rust_s3_code_examples.html)
 
-## How to use
+## Getting started
 
 ### Precondition
 
-Either 
-- AWS can be utilized for deploying an AWS S3 bucket or 
-- a localstack docker container can be utilized. 
+- Install the [Docker engine](https://docs.docker.com/engine/install/)
+- In VS Code install the `Dev Containers` extension 
+- AWS can be utilized for deploying an AWS S3 bucket or a localstack docker container can be utilized. 
 
 In order to ramp up the localstack container execute:
 
