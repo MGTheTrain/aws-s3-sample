@@ -21,29 +21,36 @@
 // SOFTWARE.
 
 
-use colored::Colorize;
-use log::info;
-use std::env;
+use aws_sdk_s3::{
+    error::SdkError,
+    operation::{
+        create_bucket::{CreateBucketError, CreateBucketOutput},
+        get_object::{GetObjectError, GetObjectOutput},
+        put_object::{PutObjectError, PutObjectOutput},
+    },
+    Error,
+};
+use async_trait::async_trait;
 
-pub mod aws_connectors {
-    pub mod aws_s3_bucket_handler;
-}
-
-pub fn are_env_vars_set(env_var_names: &[&str]) -> bool {
-    let mut all_set = true;
-    for &env_var_name in env_var_names {
-        match env::var(env_var_name) {
-            Ok(value) => {
-                // info!("{} is set to: {}", env_var_name, value);
-            }
-            Err(_) => {
-                let mut colored_string: colored::ColoredString;
-                colored_string = format!("{} is not set.", env_var_name).red();
-                info!("{}", colored_string);
-
-                all_set = false;
-            }
-        }
-    }
-    all_set
+#[async_trait]
+trait BlobConnector {
+    async fn create_bucket(&self) -> Result<CreateBucketOutput, SdkError<CreateBucketError>>;
+    async fn show_buckets(&self) -> Result<(), Error>;
+    async fn upload_blob(
+        &self,
+        blob_name: &str,
+        upload_file_path: &str,
+    ) -> Result<(), SdkError<PutObjectError>>;
+    async fn download_blob(
+        &self,
+        blob_name: &str,
+        download_file_path: &str,
+    ) -> Result<(), SdkError<GetObjectError>>;
+    async fn delete_blob(&self, blob_name: &str) -> Result<(), Error>;
+    async fn delete_bucket(&self) -> Result<(), Error>;
+    async fn write_bytes_to_file(
+        &self,
+        bytes: &[u8],
+        file_path: &str,
+    ) -> Result<(), io::Error>;
 }
