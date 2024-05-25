@@ -30,10 +30,14 @@ use aws_sdk_s3::{
     },
     Error,
 };
+use std::{
+    io::{self, Write},
+    path::Path,
+};
 use async_trait::async_trait;
 
 #[async_trait]
-trait BlobConnector {
+pub trait BlobConnector: Send + Sync {
     async fn create_bucket(&self) -> Result<CreateBucketOutput, SdkError<CreateBucketError>>;
     async fn show_buckets(&self) -> Result<(), Error>;
     async fn upload_blob(

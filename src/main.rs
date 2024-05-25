@@ -27,6 +27,7 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 
 use common_modules::are_env_vars_set;
+use common_modules::connectors::blob_connector::BlobConnector;
 use common_modules::connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
 
 #[derive(Parser, Debug)]
