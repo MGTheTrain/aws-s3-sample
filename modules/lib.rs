@@ -25,7 +25,7 @@ use colored::Colorize;
 use log::info;
 use std::env;
 
-pub mod aws_connectors {
+pub mod connectors {
     pub mod aws_s3_bucket_handler;
 }
 
