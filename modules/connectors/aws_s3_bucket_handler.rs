@@ -44,6 +44,8 @@ use std::{
 };
 
 use colored::Colorize;
+use crate::connectors::blob_connector::BlobConnector;
+use async_trait::async_trait;
 
 pub struct AwsS3BucketHandler {
     client: Client,
@@ -52,10 +54,7 @@ pub struct AwsS3BucketHandler {
 }
 
 impl AwsS3BucketHandler {
-    pub async fn new(
-        bucket_name: &str,
-        region: String,
-    ) -> Result<Self, SdkError<CreateBucketError>> {
+    pub async fn new(bucket_name: &str, region: String) -> Result<Self, SdkError<CreateBucketError>> {
         let region_provider = RegionProviderChain::first_try(Region::new(region.clone()));
         let config = aws_config::from_env().region(region_provider).load().await;
         let client = Client::new(&config);
@@ -66,8 +65,11 @@ impl AwsS3BucketHandler {
             region: region.to_owned(),
         })
     }
+}
 
-    pub async fn create_bucket(&self) -> Result<CreateBucketOutput, SdkError<CreateBucketError>> {
+#[async_trait]
+impl BlobConnector for AwsS3BucketHandler {
+    async fn create_bucket(&self) -> Result<CreateBucketOutput, SdkError<CreateBucketError>> {
         let constraint = BucketLocationConstraint::from(&self.region as &str);
         let cfg = CreateBucketConfiguration::builder()
             .location_constraint(constraint)
@@ -83,7 +85,7 @@ impl AwsS3BucketHandler {
             .await
     }
 
-    pub async fn show_buckets(&self) -> Result<(), Error> {
+    async fn show_buckets(&self) -> Result<(), Error> {
         let response = self.client.list_buckets().send().await?;
 
         let buckets = response.buckets();
@@ -96,7 +98,7 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn upload_blob(
+    async fn upload_blob(
         &self,
         blob_name: &str,
         upload_file_path: &str,
@@ -120,7 +122,7 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn download_blob(
+    async fn download_blob(
         &self,
         blob_name: &str,
         download_file_path: &str,
@@ -145,7 +147,7 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn delete_blob(&self, blob_name: &str) -> Result<(), Error> {
+    async fn delete_blob(&self, blob_name: &str) -> Result<(), Error> {
         self.client
             .delete_object()
             .bucket(&self.bucket_name)
@@ -163,7 +165,7 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn delete_bucket(&self) -> Result<(), Error> {
+    async fn delete_bucket(&self) -> Result<(), Error> {
         self.client
             .delete_bucket()
             .bucket(&self.bucket_name)
@@ -176,7 +178,7 @@ impl AwsS3BucketHandler {
         Ok(())
     }
 
-    pub async fn write_bytes_to_file(
+    async fn write_bytes_to_file(
         &self,
         bytes: &[u8],
         file_path: &str,

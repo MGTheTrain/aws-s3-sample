@@ -25,6 +25,7 @@ use log::info;
 use std::env;
 
 pub mod connectors {
+    pub mod blob_connector;
     pub mod aws_s3_bucket_handler;
 }
 
