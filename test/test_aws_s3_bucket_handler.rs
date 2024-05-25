@@ -19,12 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-// Maintainers:
-// - MGTheTrain
-//
-// Contributors:
-// - TBD
 
 #[cfg(test)]
 mod tests {
@@ -35,7 +29,7 @@ mod tests {
     use log::info;
 
     use common_modules::are_env_vars_set;
-    use common_modules::aws_connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
+    use common_modules::connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
 
     // In order to run the test execute: `RUST_LOG=info cargo test`
     #[tokio::test]

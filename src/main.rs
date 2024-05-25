@@ -19,12 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-// Maintainers:
-// - MGTheTrain
-//
-// Contributors:
-// - TBD
 
 use log::info;
 use std::error;
@@ -33,7 +27,7 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 
 use common_modules::are_env_vars_set;
-use common_modules::aws_connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
+use common_modules::connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
 
 #[derive(Parser, Debug)]
 #[clap(
