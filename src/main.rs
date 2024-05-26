@@ -34,7 +34,7 @@ use common_modules::connectors::aws_s3_bucket_handler::AwsS3BucketHandler;
 #[clap(
     author = "MGTheTrain",
     version = "1.0.0",
-    about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) and bucket operations (show, create or delete buckets) with AWS S3 buckets."
+    about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) and bucket operations (show, create or delete buckets) on AWS S3."
 )]
 struct Cli {
     #[clap(subcommand)]
